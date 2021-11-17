@@ -49,7 +49,6 @@ public class PetInfoActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     // Firebase variable
-    //private FirebaseDatabase database;
     private DatabaseReference ref;
     private FirebaseFirestore database;
 
@@ -120,12 +119,12 @@ public class PetInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (first_click[0]) {
                     first_click[0] = false;
-                    // Send report and give toast.
-                    // divide it into 2 functions.
+
+                    // 1) Give toast.
                     Toast toast = Toast.makeText(getBaseContext(), "Success! Thank you for participation.", Toast.LENGTH_LONG);
                     toast.show();
 
-                    //서버로 위치 전송
+                    //2) 서버로 위치 전송
                     report_not_here();
 
                 } else {
@@ -137,18 +136,12 @@ public class PetInfoActivity extends AppCompatActivity {
 
     }
     // [END OnCreate]
+
     /*
      *
      *   Not Here support methods
      *
      */
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(KEY_LOCATION, lastKnownLocation);
-    }
-
     public void report_not_here() {
         Log.d("PetInfo-location", "Check permission");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -188,55 +181,6 @@ public class PetInfoActivity extends AppCompatActivity {
 
 
     }
-//
-//    private Location current_location() {
-//        /*
-//         * Get the best and most recent location of the device, which may be null in rare
-//         * cases when a location is not available.
-//         */
-//        final Location[] ret_value = new Location[1]; //we will save return value here
-//        ret_value[0] = new Location("LocationManager#GPS_PROVIDER");
-//        try {
-//            if (locationPermissionGranted) {
-//
-//
-//                //Get location
-//                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-//                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Location> task) {
-//                        if (task.isSuccessful()) {
-//                            // Set the map's camera position to the current location of the device.
-//
-//                            lastKnownLocation = task.getResult();
-//                            if (lastKnownLocation != null) {
-//                                Log.d("PetInfo-location","Got recent location");
-//                                ret_value[0] = new Location(lastKnownLocation);
-//                            }
-//                        } else {
-//                            Log.d("PetInfo-location", "Current location is null. Using defaults.");
-//                            ret_value[0].setLatitude(36.181818);
-//                            ret_value[0].setLongitude(127.351818);
-//                        }
-//                    }
-//                });
-//
-//
-//            }
-//            else{
-//                Log.d("PetInfo-location", "Location permission denied");
-//                ret_value[0] = new Location("LocationManager#GPS_PROVIDER");
-//                ret_value[0].setLatitude(36.181818);
-//                ret_value[0].setLongitude(127.351818);
-//
-//            }
-//
-//        } catch (SecurityException e)  {
-//            Log.e("PetInfo-location: %s", e.getMessage(), e);
-//        }
-//
-//        return ret_value[0];
-//    }
 
     private void getLocationPermission() {
         /*
@@ -253,5 +197,11 @@ public class PetInfoActivity extends AppCompatActivity {
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     1);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(KEY_LOCATION, lastKnownLocation);
     }
 }
