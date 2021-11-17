@@ -54,7 +54,7 @@ public class PetInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d("PetInfoActivity-fire", "Updated 23:24");
+        Log.d("PetInfoActivity-fire", "Updated 00:47");
         super.onCreate(savedInstanceState);
 
         // 1) View setting
@@ -143,13 +143,11 @@ public class PetInfoActivity extends AppCompatActivity {
      *
      */
     public void report_not_here() {
-        Log.d("PetInfo-location", "Check permission");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             getLocationPermission(); }
 
         // 1) 현재 위치 report에 저장하기
 
-        NotHere report = new NotHere();
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -157,14 +155,14 @@ public class PetInfoActivity extends AppCompatActivity {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             // Logic to handle location object
-//                             2) weight 설정하기
-                                    report.setLocation(location);
-                                    report.setWeight(5);
+//                                  2) weight 설정하기
+                                    NotHere report = new NotHere(location, 5);
 
                                     // 3) 문서 이름 정하기
                                     Date cur_time = new Date();
-                                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_kkmmss");
-                                    String docs_name = format.format(cur_time);
+                                    SimpleDateFormat format = new SimpleDateFormat("MMdd_kkmmss");
+                                    double dValue = Math.random();
+                                    String docs_name = format.format(cur_time) + String.valueOf((int)(dValue * 999));
 
                                     Log.d("PetInfoActivity", "send report to firebase " + docs_name);
 
@@ -174,7 +172,6 @@ public class PetInfoActivity extends AppCompatActivity {
                                     database.collection("notHere").document(docs_name).set(report);
                         }
                         else {
-                            Log.d("PetInfo-location", "location is null");
                         }
                     }
                 });

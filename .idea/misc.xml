@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/kgy55/AndroidStudioProjects/real_FindMe/app/src/main/res/drawable/cat.xml" value="0.29814814814814816" />
+        <entry key="..\:/Users/kgy55/AndroidStudioProjects/real_FindMe/app/src/main/res/layout/main.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/kgy55/AndroidStudioProjects/real_FindMe/app/src/main/res/layout/petinfo.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/game.xml" value="0.1453125" />
         <entry key="app/src/main/res/layout/group_item.xml" value="0.1983695652173913" />
         <entry key="app/src/main/res/layout/here.xml" value="0.1" />
